@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Ground
   - Obstacle
+  - Dog
+  - PowerUp
+  - Enemy
   layers:
   - Default
   - TransparentFX
