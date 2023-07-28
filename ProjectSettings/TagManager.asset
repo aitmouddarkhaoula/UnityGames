@@ -9,6 +9,7 @@ TagManager:
   - Dog
   - PowerUp
   - Enemy
+  - Bad
   layers:
   - Default
   - TransparentFX

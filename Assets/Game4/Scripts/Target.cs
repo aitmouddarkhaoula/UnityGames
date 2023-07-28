@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -15,6 +16,7 @@ public class Target : MonoBehaviour
     [SerializeField] private ParticleSystem _explosionParticle;
     [SerializeField] private Rigidbody _targeRigidbody;
     [SerializeField] private GameManagerF _gameManager;
+  
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +26,16 @@ public class Target : MonoBehaviour
         transform.position = RandomSpawnPos();
         _gameManager = GameObject.Find("Game Manager").GetComponent<GameManagerF>();
         
+    }
+
+    private void Update()
+    {
+        if (transform.position.y < -7)
+        {
+            Destroy(gameObject);
+            _gameManager.GameOver();
+            
+        }
     }
 
     public Vector3 RandomForce()
@@ -43,14 +55,24 @@ public class Target : MonoBehaviour
 
     private void OnMouseDown()
     {
-        Instantiate(_explosionParticle, transform.position, _explosionParticle.transform.rotation);
-        _gameManager.UpdateScore(_pointValue);
-        Destroy(gameObject);
+        if (_gameManager._isGameActive)
+        {
+            Instantiate(_explosionParticle, transform.position, _explosionParticle.transform.rotation);
+            _gameManager.UpdateScore(_pointValue);
+            Destroy(gameObject);
+        }
+      
         
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Destroy(gameObject);
+        /*Destroy(gameObject);
+        if(!other.CompareTag("Bad"))
+        {
+            _gameManager.GameOver();
+            Destroy(gameObject);
+        }*/
     }
+    
 }
